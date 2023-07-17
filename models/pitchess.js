@@ -1,6 +1,5 @@
 const mongoose =  require('mongoose');
 
-
 const pitchesSchema = new mongoose.Schema({
     entrepreneur:{
         type:String,
@@ -32,16 +31,9 @@ const pitchesSchema = new mongoose.Schema({
     timestamps:true
 });
 
-
-
 pitchesSchema.virtual('id').get(function(){
     return this._id.toHexString();
-});
-
-// // Ensure virtual fields are serialised.
-// pitchSchema.set('toJSON', {
-//     virtuals: true
-// });
+2});
 
 pitchesSchema.set('toJSON', {
     virtuals: true,

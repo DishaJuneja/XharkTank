@@ -1,8 +1,7 @@
-const Pitch = require('../models/pitchess');
+ const Pitch = require('../models/pitchess');
 const Investor = require('../models/investorss');
 
-
-
+// first api endpoint
 module.exports.newPitch =async function(req,res){
  try{
     let newPitch = await Pitch.create({
@@ -19,10 +18,7 @@ module.exports.newPitch =async function(req,res){
     console.log(newPitch);
     return res.status(201).json({
              id:newPitch._id,
-    });
-
-
-       
+    });  
 }
  }catch(err){
     console.log("error in creating pitch");
@@ -30,6 +26,8 @@ module.exports.newPitch =async function(req,res){
  }
 }
 
+
+// second api endpoint
 module.exports.newInvestor =async function(req,res){
    
     try{
@@ -60,50 +58,49 @@ module.exports.newInvestor =async function(req,res){
      }catch(err){
         console.log("error in creating investor");
         return  res.status(400).send("Invalid request body");
-}
+     }
 }
 
+// third api endpoint 
 module.exports.allPitches =async function(req,res){
 
     let pitches = await Pitch.find({},{id:1,entrepreneur:1,pitchTitle:1,pitchIdea:1,askAmount:1,equity:1,offers:1})
             .sort('-createdAt')
             .populate('offers',{id:1,investor:1,amount:1,equity:1,comment:1});
- if(!pitches){
-     console.log("cannot fetch pitches");
-     return;
+    if(!pitches){
+        console.log("cannot fetch pitches");
+        return;
 
- }
-
-//console.log(pitches.length);
-// return res.status(200).json({
-    
-// pitches:pitches
-// });
-
-return res.status(200).send(pitches);
+    }
+    return res.status(200).send(pitches);
 }
 
-
+//fourth api endpoint
 module.exports.oneSpecificPitch = async function(req,res){
-  //  console.log("*****here***");
   try{
-let id = req.params.id;
-    let pitch =await  Pitch.findById(id).populate('offers',{id:1,investor:1,amount:1,equity:1,comment:1});;
-          
-return res.status(200).json({
-    id:pitch.id,
-    entrepreneur:pitch.entrepreneur,
-    pitchTitle:pitch.pitchTitle,
-    pitchIdea:pitch.pitchIdea,
-    askAmount:pitch.askAmount,
-    equity:pitch.equity,
-    offers:pitch.offers,
-});
+    let id = req.params.id;
+        let pitch =await  Pitch.findById(id).populate('offers',{id:1,investor:1,amount:1,equity:1,comment:1});;
+            
+    return res.status(200).json({
+        id:pitch.id,
+        entrepreneur:pitch.entrepreneur,
+        pitchTitle:pitch.pitchTitle,
+        pitchIdea:pitch.pitchIdea,
+        askAmount:pitch.askAmount,
+        equity:pitch.equity,
+        offers:pitch.offers,
+    });
   }catch(err){
     console.log("error in specific pitch finding");
     return res.status(404).send("Pitch Not Found");
   }
 }
+
+
+
+
+
+
 
 
 

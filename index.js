@@ -1,5 +1,4 @@
 const express=require("express");
-//require("./db/conn");
 const port = 8081;
 const connectDB=require('./db/conn');
 const app=express();
@@ -7,7 +6,7 @@ const path= require('path');
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-//error//////////////////
+
 app.use('/',require('./routes/index'));
 
 const start = async() =>{
